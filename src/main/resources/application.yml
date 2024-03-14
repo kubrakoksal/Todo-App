@@ -1,0 +1,12 @@
+server:
+  port: ${PORT:8080}
+  application:
+    name: todo-app
+spring:
+  data:
+    couchbase:
+      connectionString: ${COUCHBASE_CONNECTION_HOST:couchbase://127.0.0.1}
+      username: ${COUCHBASE_USERNAME:kkoksal}
+      password: ${COUCHBASE_PASSWORD:kkoksal1234}
+      bucket-name: ${COUCHBASE_BUCKET:todos}
+      auto-index: true
