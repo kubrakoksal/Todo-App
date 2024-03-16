@@ -1,12 +1,17 @@
 package com.kkoksal.dto.request;
 
-import jakarta.validation.constraints.Email;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class UserLoginRequest {
 
-    @Email
-    private String email;
+    @NotBlank
+    @JsonProperty("user_name")
+    private String userName;
 
     @NotBlank
     private String password;

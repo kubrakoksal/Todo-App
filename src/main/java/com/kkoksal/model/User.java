@@ -23,6 +23,9 @@ public class User {
     @Field(name = "last_name")
     private String lastName;
 
+    @Field(name = "user_name")
+    private String userName;
+
     @Field
     private String email;
 

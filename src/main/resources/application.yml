@@ -10,3 +10,7 @@ spring:
       password: ${COUCHBASE_PASSWORD:kkoksal1234}
       bucket-name: ${COUCHBASE_BUCKET:todos}
       auto-index: true
+jwt:
+  secret: kkoksal123
+  expiration_ms: 300000000
+  issuer: kkoksal

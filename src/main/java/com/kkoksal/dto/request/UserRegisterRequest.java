@@ -17,6 +17,10 @@ public class UserRegisterRequest {
     private String lastName;
 
     @NotBlank
+    @JsonProperty(value = "user_name")
+    private String userName;
+
+    @NotBlank
     @Email
     private String email;
 
