@@ -3,50 +3,61 @@ package com.kkoksal.controller;
 import com.kkoksal.config.LoggedInUser;
 import com.kkoksal.config.security.UserPrincipal;
 import com.kkoksal.dto.request.TodoItemRequest;
-import com.kkoksal.model.TodoItem;
+import com.kkoksal.dto.response.TodoResponse;
+import com.kkoksal.dto.response.TodoResponsePageable;
 import com.kkoksal.service.TodosService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/v1/todo")
 @RequiredArgsConstructor
+@Tag(name = "Todo", description = "Todo CRUD Operations Service")
+@SecurityRequirement(name = "Bearer Authentication")
 public class TodosController {
 
     private final TodosService todosService;
 
     @PostMapping
-    public void addTodoItem(@RequestBody @Valid TodoItemRequest todoItemRequest) {
-        todosService.addTodoItem(todoItemRequest);
+    @Operation(summary = "Add todo item")
+    public void addTodoItem(@LoggedInUser UserPrincipal userPrincipal, @RequestBody @Valid TodoItemRequest todoItemRequest) {
+        todosService.addTodoItem(userPrincipal.getId(), todoItemRequest);
     }
 
     @PutMapping("/{itemId}")
-    public void editTodoItem(@PathVariable String itemId, @RequestBody @Valid TodoItemRequest todoItemRequest) {
-        todosService.editTodoItem(itemId, todoItemRequest);
+    @Operation(summary = "Edit todo item")
+    public void editTodoItem(@LoggedInUser UserPrincipal userPrincipal, @PathVariable String itemId, @RequestBody @Valid TodoItemRequest todoItemRequest) {
+        todosService.editTodoItem(userPrincipal.getId(), itemId, todoItemRequest);
     }
 
-    @GetMapping("/items/")
-    public List<TodoItem> getAllTodoItems(@LoggedInUser UserPrincipal userPrincipal) {
-        return todosService.getAllTodoItems(userPrincipal.getId());
+    @GetMapping("/items")
+    @Operation(summary = "Get all todo items of logged in user")
+    public ResponseEntity<TodoResponsePageable> getAllTodoItems(@LoggedInUser UserPrincipal userPrincipal, Pageable pageable) {
+        return ResponseEntity.ok(todosService.getAllTodoItems(userPrincipal.getId(), pageable));
     }
 
     @GetMapping("/item/{itemId}")
-    public TodoItem getTodoItemById(@PathVariable String itemId, @LoggedInUser UserPrincipal userPrincipal) {
-        return todosService.getTodoItemById(itemId, userPrincipal.getId());
+    @Operation(summary = "Get todo item by id")
+    public ResponseEntity<TodoResponse> getTodoItemById(@PathVariable String itemId, @LoggedInUser UserPrincipal userPrincipal) {
+        return ResponseEntity.ok(todosService.getTodoItemById(itemId, userPrincipal.getId()));
     }
 
-    @DeleteMapping("/item/{itemId}/user/{userId}")
+    @DeleteMapping("/item/{itemId}")
+    @Operation(summary = "Delete todo item by id")
     public void deleteTodoItem(@PathVariable String itemId, @LoggedInUser UserPrincipal userPrincipal) {
         todosService.deleteTodoItem(itemId, userPrincipal.getId());
     }
 
-    @GetMapping("/test/")
-    public String test(@LoggedInUser UserPrincipal userPrincipal) throws InterruptedException {
-        Thread.sleep(5000);
-        return userPrincipal.getUsername();
+    @PutMapping("/item/{itemId}/complete")
+    @Operation(summary = "Complete todo item by id")
+    public void completeTodoItem(@PathVariable String itemId, @LoggedInUser UserPrincipal userPrincipal) {
+        todosService.completeTodoItem(itemId, userPrincipal.getId());
     }
 
 }

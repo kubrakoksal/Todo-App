@@ -1,17 +1,19 @@
-package com.kkoksal.dto.request;
+package com.kkoksal.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class TodoItemRequest {
+public class TodoResponse {
+    @Schema(name = "id", example = "a9e023a8-45d...", requiredMode = Schema.RequiredMode.REQUIRED)
+    private String id;
 
-    @NotBlank(message = "Item title can not be empty")
     @Schema(name = "title", example = "example title", requiredMode = Schema.RequiredMode.REQUIRED)
     private String title;
 
-    @NotBlank(message = "Item content can not be empty")
     @Schema(name = "content", example = "description", requiredMode = Schema.RequiredMode.REQUIRED)
     private String content;
+
+    @Schema(name = "todo item status", example = "true/false", requiredMode = Schema.RequiredMode.REQUIRED)
+    private Boolean completed;
 }

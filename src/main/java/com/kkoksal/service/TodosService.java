@@ -1,18 +1,20 @@
 package com.kkoksal.service;
 
 import com.kkoksal.dto.request.TodoItemRequest;
-import com.kkoksal.model.TodoItem;
-
-import java.util.List;
+import com.kkoksal.dto.response.TodoResponse;
+import com.kkoksal.dto.response.TodoResponsePageable;
+import org.springframework.data.domain.Pageable;
 
 public interface TodosService {
-    void addTodoItem(TodoItemRequest todoItem);
+    void addTodoItem(String userId, TodoItemRequest todoItem);
 
-    void editTodoItem(String itemId, TodoItemRequest todoItem);
+    void editTodoItem(String userId, String itemId, TodoItemRequest todoItem);
 
-    List<TodoItem> getAllTodoItems(String userId);
+    TodoResponsePageable getAllTodoItems(String userId, Pageable pageable);
 
-    TodoItem getTodoItemById(String itemId, String userId);
+    TodoResponse getTodoItemById(String itemId, String userId);
 
     void deleteTodoItem(String itemId, String userId);
+
+    void completeTodoItem(String itemId, String userId);
 }

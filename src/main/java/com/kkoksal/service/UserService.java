@@ -2,11 +2,12 @@ package com.kkoksal.service;
 
 import com.kkoksal.dto.request.UserLoginRequest;
 import com.kkoksal.dto.request.UserRegisterRequest;
-import com.kkoksal.dto.response.UserRegisterResponse;
+import com.kkoksal.dto.response.LoginResponse;
+import com.kkoksal.dto.response.RegisterResponse;
 
 public interface UserService {
 
-    public UserRegisterResponse register(UserRegisterRequest registerRequest);
+    public RegisterResponse register(UserRegisterRequest registerRequest);
 
-    String login(UserLoginRequest loginRequest);
+    LoginResponse login(UserLoginRequest loginRequest);
 }

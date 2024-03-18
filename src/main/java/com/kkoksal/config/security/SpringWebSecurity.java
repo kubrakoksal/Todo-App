@@ -39,7 +39,7 @@ public class SpringWebSecurity {
                 .authorizeHttpRequests(authorize -> authorize.
                         requestMatchers(getOpenedResources()).permitAll().
                         requestMatchers("/v1/todo/**").permitAll().anyRequest().authenticated())
-                .exceptionHandling(configure -> configure.authenticationEntryPoint(authenticationEntryPoint))
+                //.exceptionHandling(configure -> configure.authenticationEntryPoint(authenticationEntryPoint))
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
@@ -52,12 +52,10 @@ public class SpringWebSecurity {
 
     private String[] getOpenedResources() {
         return new String[]{
-                "/swagger-ui/**",
-                "/swagger-resources",
-                "/swagger-resources/**",
-                "/v3/api-docs",
+                "/swagger-ui.html",
                 "/v3/api-docs/**",
-                "/auth/**"
+                "/swagger-ui/**",
+                "/v1/auth/**"
         };
     }
 

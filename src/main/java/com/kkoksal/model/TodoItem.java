@@ -29,4 +29,7 @@ public class TodoItem {
     @Field("user_id")
     private String userId;
 
+    @Field("completed")
+    private Boolean completed;
+
 }

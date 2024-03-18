@@ -1,9 +1,11 @@
 package com.kkoksal.service.impl;
 
 import com.kkoksal.config.security.AuthJwtManager;
+import com.kkoksal.config.security.UserPrincipal;
 import com.kkoksal.dto.request.UserLoginRequest;
 import com.kkoksal.dto.request.UserRegisterRequest;
-import com.kkoksal.dto.response.UserRegisterResponse;
+import com.kkoksal.dto.response.LoginResponse;
+import com.kkoksal.dto.response.RegisterResponse;
 import com.kkoksal.exception.UserAlreadyExistsException;
 import com.kkoksal.mapper.UserMapper;
 import com.kkoksal.model.User;
@@ -32,7 +34,7 @@ public class UserServiceImpl implements UserService {
     AuthJwtManager authJwtManager;
 
     @Override
-    public UserRegisterResponse register(UserRegisterRequest registerRequest) {
+    public RegisterResponse register(UserRegisterRequest registerRequest) {
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
             throw new UserAlreadyExistsException("A user is already registered with this e-mail address");
         }
@@ -45,9 +47,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(UserLoginRequest loginRequest) {
+    public LoginResponse login(UserLoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return authJwtManager.generateJwtToken(authentication);
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        String token = authJwtManager.generateJwtToken(userPrincipal);
+        return LoginResponse.builder().token(token).userName(userPrincipal.getUsername()).build();
     }
 }
