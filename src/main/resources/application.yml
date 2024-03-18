@@ -12,5 +12,5 @@ spring:
       auto-index: true
 jwt:
   secret: kkoksal123
-  expiration_ms: 300000000
+  expiration_ms: 600000
   issuer: kkoksal

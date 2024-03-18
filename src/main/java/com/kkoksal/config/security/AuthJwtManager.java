@@ -3,9 +3,10 @@ package com.kkoksal.config.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.kkoksal.exception.CustomTokenExpiredException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -22,8 +23,7 @@ public class AuthJwtManager {
     @Value("${jwt.issuer}")
     private String jwtIssuer;
 
-    public String generateJwtToken(Authentication authentication) {
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+    public String generateJwtToken(UserPrincipal userPrincipal) {
         Algorithm algorithm = Algorithm.HMAC512(jwtSecret);
         return JWT.create()
                 .withExpiresAt(new Date(System.currentTimeMillis() + jwtExpirationMs))
@@ -40,7 +40,12 @@ public class AuthJwtManager {
         JWTVerifier jwtVerifier = JWT.require(algorithm)
                 .withIssuer(jwtIssuer)
                 .build();
-        DecodedJWT decodedJWT = jwtVerifier.verify(jwtToken);
+        DecodedJWT decodedJWT;
+        try {
+            decodedJWT = jwtVerifier.verify(jwtToken);
+        } catch (TokenExpiredException e) {
+            throw new CustomTokenExpiredException("SESSION_EXPIRED. User session is expired!");
+        }
         if (isTokenExpired(decodedJWT)) {
             return null;
         }
