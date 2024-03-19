@@ -53,6 +53,7 @@ docker run -d -p 8080:8080 -e PORT=8080 -e COUCHBASE_CONNECTION_HOST=couchbase:/
 ```
 !! Change ip based on your db machine ip (ex: ipconfig windows)<br>
 !! Use the same values for the COUCHBASE_ variables that you use when running the database<br>
+Usage -> TodoApp.postman_collection.json
 
 #### 3. Run Todo App FE (Optional)
 ```bash
