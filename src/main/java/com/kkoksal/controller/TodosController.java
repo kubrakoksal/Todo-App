@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,14 +27,17 @@ public class TodosController {
 
     @PostMapping
     @Operation(summary = "Add todo item")
-    public void addTodoItem(@LoggedInUser UserPrincipal userPrincipal, @RequestBody @Valid TodoItemRequest todoItemRequest) {
-        todosService.addTodoItem(userPrincipal.getId(), todoItemRequest);
+    public ResponseEntity<TodoResponse> addTodoItem(@LoggedInUser UserPrincipal userPrincipal, @RequestBody @Valid TodoItemRequest todoItemRequest) {
+        return ResponseEntity.ok(todosService.addTodoItem(userPrincipal.getId(), todoItemRequest));
+
     }
 
     @PutMapping("/{itemId}")
     @Operation(summary = "Edit todo item")
-    public void editTodoItem(@LoggedInUser UserPrincipal userPrincipal, @PathVariable String itemId, @RequestBody @Valid TodoItemRequest todoItemRequest) {
+    public ResponseEntity<TodoResponse> editTodoItem(@LoggedInUser UserPrincipal userPrincipal, @PathVariable String itemId, @RequestBody @Valid TodoItemRequest todoItemRequest) {
         todosService.editTodoItem(userPrincipal.getId(), itemId, todoItemRequest);
+        return ResponseEntity.ok(todosService.editTodoItem(userPrincipal.getId(), itemId, todoItemRequest));
+
     }
 
     @GetMapping("/items")
@@ -50,14 +54,15 @@ public class TodosController {
 
     @DeleteMapping("/item/{itemId}")
     @Operation(summary = "Delete todo item by id")
+    @ResponseStatus(HttpStatus.OK)
     public void deleteTodoItem(@PathVariable String itemId, @LoggedInUser UserPrincipal userPrincipal) {
         todosService.deleteTodoItem(itemId, userPrincipal.getId());
     }
 
     @PutMapping("/item/{itemId}/complete")
     @Operation(summary = "Complete todo item by id")
-    public void completeTodoItem(@PathVariable String itemId, @LoggedInUser UserPrincipal userPrincipal) {
-        todosService.completeTodoItem(itemId, userPrincipal.getId());
+    public ResponseEntity<TodoResponse> completeTodoItem(@PathVariable String itemId, @LoggedInUser UserPrincipal userPrincipal) {
+        return ResponseEntity.ok(todosService.completeTodoItem(itemId, userPrincipal.getId()));
     }
 
 }

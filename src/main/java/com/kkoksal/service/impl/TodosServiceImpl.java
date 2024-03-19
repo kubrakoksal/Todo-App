@@ -24,19 +24,19 @@ public class TodosServiceImpl implements TodosService {
     private final TodoRepository todoRepository;
 
     @Override
-    public void addTodoItem(String userId, TodoItemRequest todoItemRequest) {
+    public TodoResponse addTodoItem(String userId, TodoItemRequest todoItemRequest) {
         TodoItem todoItem = todoItemMapper.convertItemRequestToTodoItem(todoItemRequest);
         todoItem.setUserId(userId);
         todoItem.setCompleted(false);
-        todoRepository.save(todoItem);
+        return todoItemMapper.convertTodoItemToTodoResponse(todoRepository.save(todoItem));
     }
 
     @Override
-    public void editTodoItem(String userId, String itemId, TodoItemRequest todoItemRequest) {
+    public TodoResponse editTodoItem(String userId, String itemId, TodoItemRequest todoItemRequest) {
         TodoItem todoItem = findTodoItemById(userId, itemId);
         todoItem.setContent(todoItemRequest.getContent());
         todoItem.setTitle(todoItemRequest.getTitle());
-        todoRepository.save(todoItem);
+        return todoItemMapper.convertTodoItemToTodoResponse(todoRepository.save(todoItem));
     }
 
     @Override
@@ -59,10 +59,10 @@ public class TodosServiceImpl implements TodosService {
     }
 
     @Override
-    public void completeTodoItem(String itemId, String userId) {
+    public TodoResponse completeTodoItem(String itemId, String userId) {
         TodoItem todoItem = findTodoItemById(userId, itemId);
         todoItem.setCompleted(true);
-        todoRepository.save(todoItem);
+        return todoItemMapper.convertTodoItemToTodoResponse(todoRepository.save(todoItem));
     }
 
     private TodoItem findTodoItemById(String userId, String itemId) {

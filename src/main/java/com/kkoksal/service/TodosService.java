@@ -6,9 +6,9 @@ import com.kkoksal.dto.response.TodoResponsePageable;
 import org.springframework.data.domain.Pageable;
 
 public interface TodosService {
-    void addTodoItem(String userId, TodoItemRequest todoItem);
+    TodoResponse addTodoItem(String userId, TodoItemRequest todoItem);
 
-    void editTodoItem(String userId, String itemId, TodoItemRequest todoItem);
+    TodoResponse editTodoItem(String userId, String itemId, TodoItemRequest todoItem);
 
     TodoResponsePageable getAllTodoItems(String userId, Pageable pageable);
 
@@ -16,5 +16,5 @@ public interface TodosService {
 
     void deleteTodoItem(String itemId, String userId);
 
-    void completeTodoItem(String itemId, String userId);
+    TodoResponse completeTodoItem(String itemId, String userId);
 }
