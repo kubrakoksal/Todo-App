@@ -1,0 +1,328 @@
+{
+	"info": {
+		"_postman_id": "3c79fcae-5c10-46db-b6ef-90d80a6aff83",
+		"name": "TodoApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30810589"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"name\",\r\n    \"last_name\": \"surname\",\r\n    \"user_name\": \"username\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:8080/v1/auth/register",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_name\" : \"username\",\r\n    \"password\" : \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:8080/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddTodoItem",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\": \"content\",\r\n    \"title\": \"title\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:8080/v1/todo",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditTodoItem",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTA4NDM4NTUsIlJPTEUiOiJBRE1JTiIsImlhdCI6MTcxMDg0MzI1NSwiaXNzIjoia2tva3NhbCIsInN1YiI6InVzZXJuYW1lIn0.zWelkXVRhN5j5FaktUKI0e1X7V6n_BAA5rEp4jueItrKpsA1YEqqCmdh3qbrkTZMnKjohzG-YXKStdtnBvv8OQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\" : \"New title\",\r\n    \"content\": \"This is a new content\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:8080/v1/todo/749711c9-ece8-4b8d-9c95-c196242c2ebc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"todo",
+						"749711c9-ece8-4b8d-9c95-c196242c2ebc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllTodoItems",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:8080/v1/todo/items?page=0&size=10&sort=created_at,desc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"todo",
+						"items"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "sort",
+							"value": "created_at,desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTodoItemByID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:8080/v1/todo/item/749711c9-ece8-4b8d-9c95-c196242c2ebc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"todo",
+						"item",
+						"749711c9-ece8-4b8d-9c95-c196242c2ebc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteTodoItem",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:8080/v1/todo/item/749711c9-ece8-4b8d-9c95-c196242c2ebc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"todo",
+						"item",
+						"749711c9-ece8-4b8d-9c95-c196242c2ebc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "completeTodoItem",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:8080/v1/todo/item/3eac104d-240e-47d5-bf61-00b07179882b/complete",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"todo",
+						"item",
+						"3eac104d-240e-47d5-bf61-00b07179882b",
+						"complete"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "inherit"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ip",
+			"value": "ip",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "token",
+			"type": "string"
+		}
+	]
+}
