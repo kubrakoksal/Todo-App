@@ -59,18 +59,3 @@ docker run -d -p 8080:8080 -e PORT=8080 -e COUCHBASE_CONNECTION_HOST=couchbase:/
 docker run -d -p 8081:8081 -e PORT=8081 -e VUE_APP_IP={{ip}} -e VUE_APP_PORT=8080  kkoksal/todo-app-fe npm run serve
 ```
 !! Change ip and based on your be app configurations (ex: ipconfig windows)<br>
-
-## Usage
-
-```python
-import foobar
-
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
