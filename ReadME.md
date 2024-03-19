@@ -1,4 +1,4 @@
-[TodoApp.postman_collection.json](https://github.com/kubrakoksal/Todo-App/files/14649185/TodoApp.postman_collection.json)# Todo List Application
+# Todo List Application
 
 This application is a demo project includes following operations
 - Login
