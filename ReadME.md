@@ -1,4 +1,4 @@
-# Todo List Application
+[TodoApp.postman_collection.json](https://github.com/kubrakoksal/Todo-App/files/14649185/TodoApp.postman_collection.json)# Todo List Application
 
 This application is a demo project includes following operations
 - Login
@@ -38,7 +38,7 @@ If you want to run project locally change  following properties based on your db
 - COUCHBASE_BUCKET
 
 ### Run Project With Docker
-#### Run Couchdb Database
+#### 1. Run Couchdb Database
 ```bash
 docker run -d --name my-couchbase -p 8091-8094:8091-8094 -p 11210:11210 -e CLUSTER_USERNAME=user -e CLUSTER_PASSWORD=password -e CLUSTER_NAME=Example_Cluster -e SERVICES=data,index,query,fts -e BUCKET=app_bucket -e NODE_INIT_INDEX_PATH=/opt/couchbase/var/lib/couchbase/indexes -e RBAC_USERNAME=user -e RBAC_PASSWORD=pwd123 bentonam/couchbase-docker
 ```
@@ -47,15 +47,16 @@ Please log in at [http://localhost:8091/ui/index.html](http://localhost:8091/ui/
 ![image](https://github.com/kubrakoksal/Todo-App/assets/47196852/6bd0ebaf-ea36-498f-a90f-ff70bbfca598)<br>
 Login to the database using the CLUSTER_USERNAME and CLUSTER_PASSWORD values.<br>
 
-#### Run Todo App
+#### 2. Run Todo App
 ```bash
-docker run -d -p 8080:8080 -e PORT=8080 -e COUCHBASE_CONNECTION_HOST=couchbase://{{ip}} -e COUCHBASE_USERNAME=kkoksal -e COUCHBASE_PASSWORD:kkoksal1234 -e COUCHBASE_BUCKET=app_bucket kkoksal/todo-app-be
+docker run -d -p 8080:8080 -e PORT=8080 -e COUCHBASE_CONNECTION_HOST=couchbase://ip -e COUCHBASE_USERNAME=user -e COUCHBASE_PASSWORD=password -e COUCHBASE_BUCKET=app_bucket kkoksal/todo-app-be
 ```
 !! Change ip based on your db machine ip (ex: ipconfig windows)<br>
 !! Use the same values for the COUCHBASE_ variables that you use when running the database<br>
 
-#### Run Todo App FE (Optional)
+#### 3. Run Todo App FE (Optional)
 ```bash
-docker run -d -p 8081:8081 -e PORT=8081 -e VUE_APP_IP={{ip}} -e VUE_APP_PORT=8080  kkoksal/todo-app-fe npm run serve
+docker run -d -p 8081:8081 -e PORT=8081 -e VUE_APP_IP=ip -e VUE_APP_PORT=8080  kkoksal/todo-app-fe npm run serve
 ```
-!! Change ip and based on your be app configurations (ex: ipconfig windows)<br>
+http://ip:port/login (http://localhost:8081/login)<br>
+!! Change VUE_APP_IP and VUE_APP_PORT based on your be app configurations (ex: ipconfig windows)<br>
